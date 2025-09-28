@@ -7,6 +7,7 @@ module.exports = {
   ],
   env: {
     browser: true,
+    jest: true,
   },
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -19,4 +20,13 @@ module.exports = {
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
   },
+  overrides: [
+    {
+      files: ['**/*.test.js', '**/*.spec.js'],
+      rules: {
+        'import/extensions': 'off', // allow imports without extensions in tests
+        'global-require': 'off', // allow require() for dynamic mocking in tests
+      },
+    },
+  ],
 };
