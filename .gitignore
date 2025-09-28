@@ -3,6 +3,11 @@ coverage/*
 logs/*
 node_modules/*
 
+# Test artifacts
+*.lcov
+junit.xml
+test-results.xml
+
 helix-importer-ui
 .DS_Store
 *.bak
