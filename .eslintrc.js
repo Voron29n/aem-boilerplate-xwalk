@@ -25,6 +25,7 @@ module.exports = {
       files: ['**/*.test.js', '**/*.spec.js'],
       rules: {
         'import/extensions': 'off', // allow imports without extensions in tests
+        'global-require': 'off', // allow require() for dynamic mocking in tests
       },
     },
   ],

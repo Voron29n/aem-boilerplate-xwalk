@@ -10,11 +10,8 @@ import {
   readBlockConfig,
   createOptimizedPicture,
   decorateButtons,
-  decorateIcons,
   buildBlock,
   decorateBlock,
-  decorateBlocks,
-  decorateSections,
   decorateTemplateAndTheme,
   wrapTextNodes,
 } from '../../scripts/aem.js';
@@ -154,17 +151,17 @@ describe('AEM Utility Functions', () => {
   describe('createOptimizedPicture', () => {
     test('should create picture element with webp and fallback sources', () => {
       const picture = createOptimizedPicture('/test.jpg', 'Test image');
-      
+
       expect(picture.tagName).toBe('PICTURE');
-      
+
       // Check for webp sources
       const webpSources = picture.querySelectorAll('source[type="image/webp"]');
       expect(webpSources.length).toBe(2);
-      
+
       // Check for fallback sources
       const fallbackSources = picture.querySelectorAll('source:not([type="image/webp"])');
       expect(fallbackSources.length).toBe(1);
-      
+
       // Check img element
       const img = picture.querySelector('img');
       expect(img).toBeTruthy();
@@ -183,12 +180,12 @@ describe('AEM Utility Functions', () => {
     test('should decorate single link in paragraph as button', () => {
       const container = document.createElement('div');
       container.innerHTML = '<p><a href="/test">Test Link</a></p>';
-      
+
       decorateButtons(container);
-      
+
       const link = container.querySelector('a');
       const paragraph = container.querySelector('p');
-      
+
       expect(link.className).toBe('button');
       expect(paragraph.classList.contains('button-container')).toBe(true);
     });
@@ -196,12 +193,12 @@ describe('AEM Utility Functions', () => {
     test('should decorate strong link as primary button', () => {
       const container = document.createElement('div');
       container.innerHTML = '<p><strong><a href="/test">Primary Button</a></strong></p>';
-      
+
       decorateButtons(container);
-      
+
       const link = container.querySelector('a');
       const paragraph = container.querySelector('p');
-      
+
       expect(link.className).toBe('button primary');
       expect(paragraph.classList.contains('button-container')).toBe(true);
     });
@@ -209,12 +206,12 @@ describe('AEM Utility Functions', () => {
     test('should decorate emphasis link as secondary button', () => {
       const container = document.createElement('div');
       container.innerHTML = '<p><em><a href="/test">Secondary Button</a></em></p>';
-      
+
       decorateButtons(container);
-      
+
       const link = container.querySelector('a');
       const paragraph = container.querySelector('p');
-      
+
       expect(link.className).toBe('button secondary');
       expect(paragraph.classList.contains('button-container')).toBe(true);
     });
@@ -222,12 +219,12 @@ describe('AEM Utility Functions', () => {
     test('should not decorate links with images', () => {
       const container = document.createElement('div');
       container.innerHTML = '<p><a href="/test"><img src="/test.jpg" alt="Test"></a></p>';
-      
+
       decorateButtons(container);
-      
+
       const link = container.querySelector('a');
       const paragraph = container.querySelector('p');
-      
+
       expect(link.className).toBe('');
       expect(paragraph.classList.contains('button-container')).toBe(false);
     });
@@ -239,12 +236,12 @@ describe('AEM Utility Functions', () => {
         ['Row 1 Col 1', 'Row 1 Col 2'],
         ['Row 2 Col 1', 'Row 2 Col 2'],
       ];
-      
+
       const block = buildBlock('test-block', content);
-      
+
       expect(block.classList.contains('test-block')).toBe(true);
       expect(block.children.length).toBe(2);
-      
+
       // Check first row
       const firstRow = block.children[0];
       expect(firstRow.children.length).toBe(2);
@@ -254,7 +251,7 @@ describe('AEM Utility Functions', () => {
 
     test('should build block from string content', () => {
       const block = buildBlock('test-block', 'Simple content');
-      
+
       expect(block.classList.contains('test-block')).toBe(true);
       expect(block.children.length).toBe(1);
       expect(block.children[0].children[0].textContent).toBe('Simple content');
@@ -265,7 +262,7 @@ describe('AEM Utility Functions', () => {
       element.textContent = 'Object content';
       const content = element; // Use an actual DOM element instead of plain object
       const block = buildBlock('test-block', content);
-      
+
       expect(block.classList.contains('test-block')).toBe(true);
       expect(block.children.length).toBe(1);
       expect(block.textContent).toContain('Object content');
@@ -276,16 +273,16 @@ describe('AEM Utility Functions', () => {
     test('should decorate block with proper classes and attributes', () => {
       const block = document.createElement('div');
       block.classList.add('test-block');
-      
+
       const wrapper = document.createElement('div');
       wrapper.appendChild(block);
-      
+
       const section = document.createElement('div');
       section.classList.add('section');
       section.appendChild(wrapper);
-      
+
       decorateBlock(block);
-      
+
       expect(block.classList.contains('block')).toBe(true);
       expect(block.dataset.blockName).toBe('test-block');
       expect(block.dataset.blockStatus).toBe('initialized');
@@ -302,17 +299,17 @@ describe('AEM Utility Functions', () => {
 
     test('should add template class to body', () => {
       document.head.innerHTML = '<meta name="template" content="landing-page">';
-      
+
       decorateTemplateAndTheme();
-      
+
       expect(document.body.classList.contains('landing-page')).toBe(true);
     });
 
     test('should add theme class to body', () => {
       document.head.innerHTML = '<meta name="theme" content="dark-theme">';
-      
+
       decorateTemplateAndTheme();
-      
+
       expect(document.body.classList.contains('dark-theme')).toBe(true);
     });
 
@@ -321,9 +318,9 @@ describe('AEM Utility Functions', () => {
         <meta name="template" content="landing-page, special">
         <meta name="theme" content="dark, mobile">
       `;
-      
+
       decorateTemplateAndTheme();
-      
+
       expect(document.body.classList.contains('landing-page')).toBe(true);
       expect(document.body.classList.contains('special')).toBe(true);
       expect(document.body.classList.contains('dark')).toBe(true);
@@ -339,9 +336,9 @@ describe('AEM Utility Functions', () => {
           <div>Plain text content</div>
         </div>
       `;
-      
+
       wrapTextNodes(block);
-      
+
       const cell = block.querySelector('div div');
       const paragraph = cell.querySelector('p');
       expect(paragraph).toBeTruthy();
@@ -355,9 +352,9 @@ describe('AEM Utility Functions', () => {
           <div><p>Already wrapped</p></div>
         </div>
       `;
-      
+
       wrapTextNodes(block);
-      
+
       const cell = block.querySelector('div div');
       const paragraphs = cell.querySelectorAll('p');
       expect(paragraphs.length).toBe(1);
@@ -371,9 +368,9 @@ describe('AEM Utility Functions', () => {
           <div class="test-class" data-aue-prop="test">Text content</div>
         </div>
       `;
-      
+
       wrapTextNodes(block);
-      
+
       const cell = block.querySelector('div div');
       const paragraph = cell.querySelector('p');
       expect(paragraph.classList.contains('test-class')).toBe(true);

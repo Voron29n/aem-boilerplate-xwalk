@@ -41,12 +41,12 @@ export const mockSetup = jest.fn();
 // Helper to create mock DOM elements for testing
 export const createMockElement = (tagName, attributes = {}, children = []) => {
   const element = document.createElement(tagName);
-  
+
   // Set attributes
   Object.entries(attributes).forEach(([key, value]) => {
     element.setAttribute(key, value);
   });
-  
+
   // Add children
   children.forEach((child) => {
     if (typeof child === 'string') {
@@ -55,7 +55,7 @@ export const createMockElement = (tagName, attributes = {}, children = []) => {
       element.appendChild(child);
     }
   });
-  
+
   return element;
 };
 
@@ -65,7 +65,7 @@ export const createMockBlock = (blockName, content = [[]]) => {
   block.classList.add(blockName, 'block');
   block.dataset.blockName = blockName;
   block.dataset.blockStatus = 'initialized';
-  
+
   content.forEach((row) => {
     const rowEl = document.createElement('div');
     row.forEach((col) => {
@@ -79,7 +79,7 @@ export const createMockBlock = (blockName, content = [[]]) => {
     });
     block.appendChild(rowEl);
   });
-  
+
   return block;
 };
 
@@ -88,13 +88,13 @@ export const createMockSection = (blocks = []) => {
   const section = document.createElement('div');
   section.classList.add('section');
   section.dataset.sectionStatus = 'initialized';
-  
+
   blocks.forEach((block) => {
     const wrapper = document.createElement('div');
     wrapper.appendChild(block);
     section.appendChild(wrapper);
   });
-  
+
   return section;
 };
 

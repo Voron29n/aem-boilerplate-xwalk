@@ -94,8 +94,13 @@ describe('Scripts Utility Functions', () => {
 
       moveAttributes(fromElement, toElement);
 
-      expect(toElement.getAttribute('empty-attr')).toBe('');
+      // Empty string attributes are not moved (falsy value)
+      expect(toElement.getAttribute('empty-attr')).toBeNull();
+      expect(fromElement.getAttribute('empty-attr')).toBe(''); // Still on source
+
+      // Non-empty attributes are moved
       expect(toElement.getAttribute('class')).toBe('test-class');
+      expect(fromElement.getAttribute('class')).toBeNull(); // Removed from source
     });
   });
 

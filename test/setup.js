@@ -51,11 +51,11 @@ global.fetch = jest.fn();
 beforeEach(() => {
   // Clear all mocks before each test
   jest.clearAllMocks();
-  
+
   // Reset DOM
   document.body.innerHTML = '';
   document.head.innerHTML = '';
-  
+
   // Reset window.hlx to default state
   global.window.hlx = {
     codeBasePath: '',
