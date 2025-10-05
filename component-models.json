@@ -129,6 +129,12 @@
         "description": "The label shown for this section in the Content Tree"
       },
       {
+        "component": "text",
+        "name": "label",
+        "label": "Label For Section",
+        "description": "The label shown for this section on the openning page"
+      },
+      {
         "component": "multiselect",
         "name": "style",
         "label": "Style",
@@ -212,6 +218,12 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "content_link",
+        "label": "Link"
       }
     ]
   }
